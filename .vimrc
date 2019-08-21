@@ -45,7 +45,6 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set nu
-set autochdir " sets the cwd to whatever file is in view.
 set bs=2
 set ruler
 set smartcase
@@ -157,9 +156,38 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Helper functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+func! DeleteTillSlash()
+    let g:cmd = getcmdline()
+
+    if has("win16") || has("win32")
+        let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
+    else
+        let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
+    endif
+
+    if g:cmd == g:cmd_edited
+        if has("win16") || has("win32")
+            let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
+        else
+            let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
+        endif
+    endif
+
+    return g:cmd_edited
+endfunc
+
+func! CurrentFileDir(cmd)
+    return a:cmd . " " . expand("%:p:h") . "/"
+endfunc
+
+
 """"""""""""""""""""""""""""""
 " => Gruvbox Options
 """"""""""""""""""""""""""""""
 let g:airline_theme='gruvbox'
 let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
+set autochdir " sets the cwd to whatever file is in view.
