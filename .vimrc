@@ -155,7 +155,7 @@ map <leader>o :BufExplorer<cr>
 """"""""""""""""""""""""""""""
 " => Misc Options for Plugins
 """"""""""""""""""""""""""""""
-let g:ale_set_highlights = 0
+let g:ale_set_highlights = 1
 
 " Only run linting when saving the file
 let g:ale_lint_on_text_changed = 'never'
@@ -290,5 +290,6 @@ endfunc
 """"""""""""""""""""""""""""""
 let g:airline_theme='gruvbox'
 let g:gruvbox_contrast_dark='hard'
+set background=dark
 colorscheme gruvbox
 set autochdir " sets the cwd to whatever file is in view.
