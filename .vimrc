@@ -33,6 +33,8 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'ervandew/supertab'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -52,7 +54,6 @@ set ruler
 set smartcase
 set incsearch
 set magic
-set showmatch
 set mat=2
 set noerrorbells
 set novisualbell
@@ -90,6 +91,9 @@ endif
 " => Keymapping for Vim and Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader=','
+
+cabb W w
+cabb Q q
 
 map <leader>o :BufExplorer<cr>
 map <leader>f :MRU<CR>
