@@ -32,13 +32,15 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'ervandew/supertab'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'bfrg/vim-cpp-modern'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General Vim Options
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set tabstop=4
@@ -145,6 +147,14 @@ map <c-b> :CtrlPBuffer<cr>
 
 let g:ctrlp_max_height = 20
 let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => CPP Modern Plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:cpp_simple_highlight = 1
+let g:cpp_named_requirements_highlight = 1
+let c_no_curly_error = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
