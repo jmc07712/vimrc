@@ -11,10 +11,6 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" Setting font and line numbers
-set number
-set guifont=Fira\ Mono:h11,Source_Code_Pro:h10,Bitstream_Ver_Sans_Mono:h10
-
 " Plugins
 Plugin 'scrooloose/nerdtree'
 Plugin 'mileszs/ack.vim'
@@ -35,10 +31,12 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'ervandew/supertab'
+Plugin 'ctrlpvim/ctrlp.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General Vim Options
@@ -95,6 +93,12 @@ let mapleader=','
 cabb W w
 cabb Q q
 
+" For faster scrubbing
+inoremap <C-Left> <C-\><C-O>b
+inoremap <C-Right> <C-\><C-O>w
+imap <C-BS> <C-W>
+
+" Misc mappings for random plugins
 map <leader>o :BufExplorer<cr>
 map <leader>f :MRU<CR>
 map <leader>nn :NERDTreeToggle<cr>
@@ -128,6 +132,19 @@ map <leader>t<leader> :tabnext<cr>
 
 " When you press <leader>r you can search and replace the selected text
 vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
+
+
+""""""""""""""""""""""""""""""
+" => CTRL-P
+""""""""""""""""""""""""""""""
+let g:ctrlp_working_path_mode = 0
+
+let g:ctrlp_map = '<c-f>'
+map <leader>j :CtrlP<cr>
+map <c-b> :CtrlPBuffer<cr>
+
+let g:ctrlp_max_height = 20
+let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -293,3 +310,7 @@ let g:gruvbox_contrast_dark='hard'
 set background=dark
 colorscheme gruvbox
 set autochdir " sets the cwd to whatever file is in view.
+
+" Setting font and line numbers
+set number
+set guifont=Fira\ Mono:h11
