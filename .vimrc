@@ -32,16 +32,16 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'ervandew/supertab'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'bfrg/vim-cpp-modern'
+Plugin 'vim-python/python-syntax'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General Vim Options
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General Vim Option
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set tabstop=4
 set shiftwidth=4
@@ -102,7 +102,7 @@ imap <C-BS> <C-W>
 
 " Misc mappings for random plugins
 map <leader>o :BufExplorer<cr>
-map <leader>f :MRU<CR>
+map <leader>mr :MRU<CR>
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark
 map <leader>nf :NERDTreeFind<cr>
@@ -142,7 +142,7 @@ vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
 let g:ctrlp_working_path_mode = 0
 
 let g:ctrlp_map = '<c-f>'
-map <leader>j :CtrlP<cr>
+map <c-p> :CtrlP<cr>
 map <c-b> :CtrlPBuffer<cr>
 
 let g:ctrlp_max_height = 20
@@ -199,6 +199,12 @@ let g:NERDTreeWinSize=35
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Python-Syntax Plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:python_highlight_all = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -324,3 +330,4 @@ set autochdir " sets the cwd to whatever file is in view.
 " Setting font and line numbers
 set number
 set guifont=Fira\ Mono:h11
+highlight LineNr guifg=#547a73
