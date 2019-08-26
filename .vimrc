@@ -100,7 +100,7 @@ inoremap <C-Right> <C-\><C-O>w
 imap <C-BS> <C-W>
 
 " Ctrl + X Functionality from VS Code
-noremap <C-x> dd  
+vnoremap <C-x> dd
 
 " Misc mappings for random plugins
 map <leader>o :BufExplorer<cr>
@@ -120,6 +120,7 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+noremap <C-k> <Esc>0yyp
 
 " Mappings to insert parenthesis/brackets/etc
 vnoremap <C-p> <esc>`>a)<esc>`<i(<esc>
