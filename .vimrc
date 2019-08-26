@@ -21,25 +21,26 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'morhetz/gruvbox'
 Plugin 'dense-analysis/ale'
 Plugin 'vim-scripts/mru.vim'
+Plugin 'scrooloose/syntastic'
 Plugin 'vim-scripts/bufexplorer.zip'
 Plugin 'tpope/vim-commentary'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
-Plugin 'vim-syntastic/syntastic'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'ervandew/supertab'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'bfrg/vim-cpp-modern'
+"Plugin 'yggdroot/indentline'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General Vim Options
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set tabstop=4
@@ -89,10 +90,10 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Keymapping for Vim and Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let mapleader=','
+let mapleader=" "
 
-cabb W w
-cabb Q q
+map :W :w
+map :Q :q
 
 " For faster scrubbing
 inoremap <C-Left> <C-\><C-O>b
@@ -100,7 +101,7 @@ inoremap <C-Right> <C-\><C-O>w
 imap <C-BS> <C-W>
 
 " Ctrl + X Functionality from VS Code
-vnoremap <C-x> dd
+noremap <c-x> dd
 
 " Misc mappings for random plugins
 map <leader>o :BufExplorer<cr>
@@ -138,7 +139,6 @@ map <leader>t<leader> :tabnext<cr>
 " When you press <leader>r you can search and replace the selected text
 vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
 
-
 """"""""""""""""""""""""""""""
 " => CTRL-P
 """"""""""""""""""""""""""""""
@@ -168,6 +168,7 @@ let g:ale_linters = {
 \   'python': ['flake8'],
 \   'go': ['go', 'golint', 'errcheck'],
 \   'c++': ['gcc', 'g++'],
+\   'c': ['gcc', 'g++']
 \}
 
 nmap <silent> <leader>a <Plug>(ale_next_wrap)
