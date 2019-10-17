@@ -30,10 +30,9 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'ervandew/supertab'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'bfrg/vim-cpp-modern'
-"Plugin 'yggdroot/indentline'
+Plugin 'ycm-core/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -91,6 +90,12 @@ endif
 " => Keymapping for Vim and Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader=","
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => YouCompleteMe Options
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+set completeopt-=preview
 
 map :W :w
 map :Q :q
@@ -233,10 +238,22 @@ let g:lightline = {
       \ 'subseparator': { 'left': ' ', 'right': ' ' }
       \ }
 
+command! Build call FindMakeFile('all')
+command! Run call FindMakeFile('run')
+map <leader>b :Build<cr>
+map <leader>r :Run<cr>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! FindMakeFile(com)
+    let fpath = findfile('Makefile', system('git rev-parse --show-toplevel')[:-2], 1)
+    let fPath = fnamemodify(fpath, ":.:h")
+    execute "!echo " . fPath
+    execute "!make " . a:com . " -C " . fPath
+endfunction
+
 " Returns true if paste mode is enabled
 function! HasPaste()
     if &paste
@@ -327,4 +344,4 @@ set autochdir " sets the cwd to whatever file is in view.
 
 " Setting font and line numbers
 set number
-set guifont=Fira\ Mono:h11
+set guifont=Fira\ Mono\ 12
