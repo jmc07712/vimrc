@@ -31,8 +31,10 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'bfrg/vim-cpp-modern'
 Plugin 'ycm-core/YouCompleteMe'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'tomasiser/vim-code-dark'
+Plugin 'sakshamgupta05/vim-todo-highlight'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -42,6 +44,8 @@ filetype plugin indent on    " required
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General Vim Options
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:airline#extensions#ale#enabled = 1
+set guioptions-=T
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -160,9 +164,12 @@ let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => CPP Modern Plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:cpp_simple_highlight = 1
-let g:cpp_named_requirements_highlight = 1
-let c_no_curly_error = 1
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_posix_standard = 1
+let g:cpp_experimental_template_highlight= 1
+let g:cpp_concepts_highlight = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -172,9 +179,12 @@ let g:ale_linters = {
 \   'javascript': ['jshint'],
 \   'python': ['flake8'],
 \   'go': ['go', 'golint', 'errcheck'],
-\   'c++': ['gcc', 'g++'],
+\   'c++': ['g++'],
 \   'c': ['gcc', 'g++']
 \}
+
+let g:ale_cpp_gcc_options = '-std=c++17 -fsyntax-only -Wextra -W4'
+
 
 nmap <silent> <leader>a <Plug>(ale_next_wrap)
 
@@ -209,6 +219,28 @@ map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
 
+map <C-h> :h<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => todo_highlight
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:todo_highlight_config = {
+      \   'REVIEW': {},
+      \   'NOTE': {
+      \     'gui_fg_color': '#119c44',
+      \     'gui_bg_color': '#ffbd2a',
+      \     'cterm_fg_color': 'green',
+      \     'cterm_bg_color': '214'
+      \   },
+      \   'TODO': {
+      \     'gui_fg_color': '#e31212',
+      \     'gui_bg_color': '#ffbd2a',
+      \     'cterm_fg_color': 'red',
+      \     'cterm_bg_color': '214'
+      \   }
+      \ }
+
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lightline
@@ -237,11 +269,6 @@ let g:lightline = {
       \ 'separator': { 'left': ' ', 'right': ' ' },
       \ 'subseparator': { 'left': ' ', 'right': ' ' }
       \ }
-
-command! Build call FindMakeFile('all')
-command! Run call FindMakeFile('run')
-map <leader>b :Build<cr>
-map <leader>r :Run<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -334,14 +361,58 @@ endfunc
 
 
 """"""""""""""""""""""""""""""
+" => Automatic Build
+""""""""""""""""""""""""""""""
+command! Build call BuildProject()
+
+noremap <leader>b :Build<cr>
+noremap <leader>n :lopen<cr>
+
+function BuildProject()
+    "save the current working directory so we can come back
+    let l:starting_directory = getcwd()
+
+    "get the directory of the currently focused file
+    let l:curr_directory = expand('%:p:h')
+    "move to the current file
+    execute "cd " . l:curr_directory
+
+    while 1
+        "check if build.bat exists in the current directory
+        if filereadable("build.bat")
+            "run make and exit
+            make | copen
+            break
+        elseif l:curr_directory ==# "/" || l:curr_directory =~# '^[^/]..$'
+            "if we've hit the top level directory, break out
+            break
+        else
+            "move up a directory
+            cd ..
+            let l:curr_directory = getcwd()
+        endif
+    endwhile
+
+    "reset directory
+    execute "cd " . l:starting_directory
+endfunction
+
+
+""""""""""""""""""""""""""""""
 " => Gruvbox Options
 """"""""""""""""""""""""""""""
-let g:airline_theme='gruvbox'
-let g:gruvbox_contrast_dark='hard'
-set background=dark
-colorscheme gruvbox
+let g:airline_theme='minimalist'
+colorscheme codedark
 set autochdir " sets the cwd to whatever file is in view.
 
 " Setting font and line numbers
 set number
-set guifont=Fira\ Mono\ 12
+set guifont=Liberation_Mono:h11:cANSI:qDRAFT
+
+" Setting the highlighting settings for keywords
+augroup myTodo
+  autocmd!
+  autocmd Syntax * syntax match myTodo /\v\_.<(TODO|FIXME|NOTE).*/hs=s+1 containedin=.*Comment
+augroup END
+
+highlight link myTodo Todo
