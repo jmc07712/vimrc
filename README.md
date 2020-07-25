@@ -4,6 +4,8 @@ The vimrc file to cure all your coding needs. This repo converts the standard vi
 ## Install
 To install this vimrc file, you need to have git bash installed, or some form of shell, as well as vim itself. It is recommended to use this vimrc with gVim, but it works with standard command line vim as well. Once you have this, simply type the following:
 
+THESE HAVE CHANGED... WORKING ON IT
+
 ``` sh
 git clone https://github.com/jmc07712/vimrc ~/.vim_runtime # This clones the repo
 cd ~/.vim_runtime
