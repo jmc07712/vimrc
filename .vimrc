@@ -1,15 +1,19 @@
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
+set nocompatible              " be iMproved, required
+set exrc
+set encoding=utf-8
+
+" set rtp+=~/.vim/autoload/plug.vim
 call plug#begin('~/.vim/plugged')
 
+Plug 'terryma/vim-multiple-cursors'
 Plug 'morhetz/gruvbox'
 Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'liuchengxu/vim-clap'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'sakshamgupta05/vim-todo-highlight'
-Plug 'vim-scripts/bufexplorer.zip'
 Plug 'chriskempson/base16-vim'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'MarcWeber/vim-addon-mw-utils'
@@ -19,10 +23,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'joshdick/onedark.vim'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'aserebryakov/vim-todo-lists'
 
-" Initialize plugin system
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -62,6 +64,9 @@ set guioptions-=L
 syntax on
 set history=500
 
+:set vi+='0  " save no marks, in other words save 0 recent marks
+:wv!         " write viminfo file without merging with old information
+
 " For persistent undo
 try
     set undodir=~/.vim_runtime/temp_dirs/undodir
@@ -80,7 +85,7 @@ set autochdir " sets the cwd to whatever file is in view.
 
 " Setting font and line numbers
 set number
-set guifont=Liberation\ Mono\ 12
+set guifont=Source\ Code\ Pro:h11
 
 " Setting the highlighting settings for keywords
 augroup myTodo
@@ -132,6 +137,25 @@ nnoremap <leader>p "+p
 nnoremap <leader>P "+P
 vnoremap <leader>p "+p
 vnoremap <leader>P "+P
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Vim Clap Bindings
+" MORE HERE: https://vimawesome.com/plugin/vim-clap#vim-plug
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <C-f> :Clap files <cr>
+nnoremap <C-b> :Clap buffers <cr>
+nnoremap <C-l> :Clap blines <cr>
+nnoremap <C-L> :Clap lines <cr>
+nnoremap <C-h> :Clap history <cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Coc Vim Settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|obj\|bin\|Properties'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -323,17 +347,6 @@ let g:lightline = {
       \ 'subseparator': { 'left': ' ', 'right': ' ' }
       \ }
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Ctrlp Settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
-set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*.pyc,node_modules,__pycache__,dist,dist_electron  " Windows
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim Fugitive Options
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -467,5 +480,4 @@ function BuildProject()
     "reset directory
     execute "cd " . l:starting_directory
 endfunction
-
 
